@@ -1,1 +1,1 @@
-# cfg-project
+# pause-app

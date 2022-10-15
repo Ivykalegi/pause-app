@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head class="h-100">
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css">
+  <style>
+    @media (max-width: 400px) {
+      html {
+        font-size: 12px;
+      }
+    }
+  </style>
+</head>
+<body class="h-100">
+  <main class="h-100 d-flex flex-column justify-content-center align-items-center">
+    <div class="container">
+      <h1 class="display-4 text-center my-5">Study Timer</h1>
+      <div class="card mx-auto" style="max-width: 500px;">
+        <div class="card-body text-center">
+          <p class="card-text mb-4" style="font-size: 5rem;" id="timer">00:00:00</p>
+          <form>
+            <div class="mb-3">
+              <label for="study-session-duration" class="form-label">Study session duration (minutes)</label>
+              <input type="number" class="form-control" id="study-session-duration">
+            </div>
+            <div class="mb-3">
+              <label for="break-duration" class="form-label">Break duration (minutes)</label>
+              <input type="number" class="form-control" id="break-duration">
+            </div>
+            <div class="mb-3">
+              <label for="total-study-duration" class="form-label">Total study duration (hours)</label>
+              <input type="number" class="form-control" id="total-study-duration">
+            </div>
+            <button type="button" class="btn btn-success" id="btn-start">Start</button>
+            <button type="button" class="btn btn-secondary" id="btn-pause">Pause</button>
+            <button type="button" class="btn btn-danger" id="btn-reset">Reset</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+  <script>
+    let currentTimer = null
+    let isPaused = false
+
+    function initialiseTimer(seconds) {
+      const hours = Math.floor(seconds / (60 * 60))
+      const minutes = Math.floor((seconds % (60 * 60)) / 60)
+      seconds = seconds % 60
+
+      timer.textContent = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
+    }
+
+    function subtractSecondFromTimer() {
+      const currentTime = timer.textContent
+      let [hours, minutes, seconds] = currentTime.split(":").map(num => parseInt(num))
+      if (seconds > 0) {
+        seconds--
+      } else if (minutes > 0) {
+        minutes--
+        seconds = 59
+      } else if (hours > 0) {
+        hours--
+        minutes = 59
+        seconds = 59
+      } else {
+        console.log("You have reached the end")
+        clearInterval(currentTimer)
+        return
+      }
+      timer.textContent = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
+    }
+
+    startButton.addEventListener("click", function() {
+      const studySessionDuration = parseFloat(studySessionDurationInput.value) * 60
+      const breakDuration = parseFloat(breakDurationInput.value) * 60
+      const totalStudyDuration = parseFloat(totalStudyDurationInput.value) * 60 * 60
+
+      if (timer.textContent === "00:00:00" || !isPaused) {
+        initialiseTimer(studySessionDuration)
+      }
+      currentTimer = setInterval(subtractSecondFromTimer, 1000)
+    })
+
+    pauseButton.addEventListener("click", function() {
+      clearInterval(currentTimer)
+      isPaused = true
+    })
+
+    resetButton.addEventListener("click", function() {
+      clearInterval(currentTimer)
+      isPaused = false
+      timer.textContent = "00:00:00"
+    })
+  </script>
+</body>
+</html>
