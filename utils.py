@@ -1,6 +1,6 @@
 from flask import request
 
-from user_mgmt import username_exists, email_exists
+from database.user_mgmt import username_exists, email_exists
 
 
 def grab_form_values(*keys):
