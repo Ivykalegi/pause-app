@@ -8,18 +8,14 @@
         <input type="text" class="form-control" id="username" name="username" required>
       </div>
       <div class="mb-3">
-        <label for="display name" class="form-label">Display name</label>
-        <input type="text" class="form-control" id="display name" name="display name" required>
-      </div>
-      <div class="mb-3">
         <label for="email" class="form-label">Email</label>
         <input type="email" class="form-control" id="email" name="email" required>
       </div>
       <div class="mb-3">
-        <label for="pin" class="form-label">Pin</label>
-        <input type="pin" class="form-control" id="pin" name="pin" required>
+        <label for="password" class="form-label">Password</label>
+        <input type="password" class="form-control" id="password" name="password" required>
       </div>
-      <button type="submit" class="btn btn-dark">Sign up</button>
+      <button type="submit" class="btn btn-dark" style="background-color:#f1bb4e">Sign up</button>
       {% with error_messages = get_flashed_messages(category_filter=['error']) %}
         {% if error_messages %}
           <p class="text-danger mt-3">{{ error_messages|join(' • ') }}</p>

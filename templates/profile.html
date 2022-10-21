@@ -2,7 +2,7 @@
 {% block title %}Home{% endblock %}
 {% block body %}
   <div class="container h-100 d-flex flex-column justify-content-center align-items-center">
-    <h1 class="text-center">Welcome, {{ user.name }}!</h1>
+    <h1 class="text-center">Welcome, {{ user.username }}!</h1>
     <form action="/signout" method="post">
       <button type="submit" class="btn btn-dark">Sign out</button>
     </form>

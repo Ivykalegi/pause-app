@@ -47,6 +47,7 @@
 
     let currentTimer = null
     let isPaused = false
+    let currentStudySessionDuration = 0
 
     function initialiseTimer(seconds) {
       const hours = Math.floor(seconds / (60 * 60))
@@ -69,8 +70,14 @@
         minutes = 59
         seconds = 59
       } else {
-        console.log("You have reached the end")
         clearInterval(currentTimer)
+        fetch('http://127.0.0.1:5001/session', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({end_datetime: new Date(), duration_in_minutes: currentStudySessionDuration})
+        });
         return
       }
       timer.textContent = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
@@ -80,6 +87,8 @@
       const studySessionDuration = parseFloat(studySessionDurationInput.value) * 60
       const breakDuration = parseFloat(breakDurationInput.value) * 60
       const totalStudyDuration = parseFloat(totalStudyDurationInput.value) * 60 * 60
+
+      currentStudySessionDuration = Math.ceil(studySessionDuration / 60)
 
       if (timer.textContent === "00:00:00" || !isPaused) {
         initialiseTimer(studySessionDuration)

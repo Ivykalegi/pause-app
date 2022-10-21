@@ -1,4 +1,4 @@
-DB_NAME = 'login_test'
+DB_NAME = 'pause'
 DB_HOST = 'localhost'
 DB_USER = 'admin'                     # Change this value according to your own setup
 DB_PASS = 'heheadmin1'               # Change this value according to your own setup

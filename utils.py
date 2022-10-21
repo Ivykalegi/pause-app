@@ -1,4 +1,4 @@
-from flask import request, redirect
+from flask import request
 
 from user_mgmt import username_exists, email_exists
 
@@ -9,18 +9,16 @@ def grab_form_values(*keys):
     return map(request.form.get, keys)
 
 
-def grab_account_creation_error(username, display_name, email, pin):
+def grab_account_creation_error(username, email, password):
     if not 1 <= len(username) <= 20:
         return 'Username must be between 1 and 20 characters long'
     if not username.isalnum():
         return 'Username must only include letters and numbers'
-    if not 1 <= len(display_name) <= 20:
-        return 'Display name must be between 1 and 20 characters long'
     if not 1 <= len(email) <= 50:
         return 'Email must be between 1 and 50 characters long'
-    if not pin.isdigit() or len(pin) != 4:
-        return 'Pin must consist of 4 digits'
+    if len(password) < 8:
+        return 'Password must be at least 8 characters'
     if not username_exists(username):
         return f'Username {username} is already taken'
     if not email_exists(email):
-        return "An account with that email already exists.", 'error'
+        return "An account with that email already exists."
