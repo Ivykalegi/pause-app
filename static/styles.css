@@ -7,3 +7,18 @@
 body{
   background-color: #FFD384;
 }
+
+.btn-bd-primary {
+  --bs-btn-font-weight: 600;
+  --bs-btn-color: var(--bs-white);
+  --bs-btn-bg: var(--bd-yellow);
+  --bs-btn-border-color: var(--bd-yellow);
+  --bs-btn-border-radius: .5rem;
+  --bs-btn-hover-color: var(--bs-white);
+  --bs-btn-hover-bg: #{shade-color($bd-yellow, 10%)};
+  --bs-btn-hover-border-color: #{shade-color($bd-yellow, 10%)};
+  --bs-btn-focus-shadow-rgb: var(--bd-yellow-rgb);
+  --bs-btn-active-color: var(--bs-btn-hover-color);
+  --bs-btn-active-bg: #{shade-color($bd-yellow, 20%)};
+  --bs-btn-active-border-color: #{shade-color($bd-yellow, 20%)};
+}

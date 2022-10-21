@@ -1,0 +1,23 @@
+CREATE DATABASE IF NOT EXISTS pause;
+USE pause;
+
+CREATE TABLE IF NOT EXISTS users(
+	id INTEGER NOT NULL AUTO_INCREMENT,
+	username VARCHAR(20) NOT NULL UNIQUE,
+	email VARCHAR(255) NOT NULL UNIQUE,
+	hashed_password BLOB NOT NULL,
+
+	PRIMARY KEY (id),
+	CHECK (LENGTH(username) > 0)
+);
+
+
+CREATE TABLE IF NOT EXISTS sessions(
+	id INTEGER NOT NULL AUTO_INCREMENT,
+	user_id INTEGER NOT NULL,
+	start_datetime DATETIME NOT NULL,
+    duration_in_minutes INTEGER NOT NULL,
+
+	PRIMARY KEY (id),
+	FOREIGN KEY (user_id) REFERENCES users(id)
+);
