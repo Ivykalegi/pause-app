@@ -1,3 +1,7 @@
+"""
+Original timer written in python.This has been updated to use javascript on the front-end
+"""
+
 import math
 import time
 

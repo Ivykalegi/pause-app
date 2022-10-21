@@ -12,6 +12,7 @@
       <h1 class="display-4 text-center my-5">Study Timer</h1>
       <div class="card mx-auto" style="max-width: 500px;">
         <div class="card-body text-center">
+          <p class="lead mb-0" id="mode"></p>
           <p class="card-text mb-4" style="font-size: 5rem;" id="timer">00:00:00</p>
           <form>
             <div class="mb-3">
@@ -36,6 +37,7 @@
   </main>
   <script>
     const timer = document.getElementById("timer")
+    const mode = document.getElementById("mode")
 
     const startButton = document.getElementById("btn-start")
     const pauseButton = document.getElementById("btn-pause")
@@ -47,7 +49,11 @@
 
     let currentTimer = null
     let isPaused = false
-    let currentStudySessionDuration = 0
+    let isCurrentlyStudying = true
+
+    let studySessionDuration = 0
+    let breakDuration = 0
+    let totalStudyDuration = 0
 
     function initialiseTimer(seconds) {
       const hours = Math.floor(seconds / (60 * 60))
@@ -70,28 +76,39 @@
         minutes = 59
         seconds = 59
       } else {
-        clearInterval(currentTimer)
-        fetch('http://127.0.0.1:5001/session', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({end_datetime: new Date(), duration_in_minutes: currentStudySessionDuration})
-        });
+        if (isCurrentlyStudying) {
+          fetch('http://127.0.0.1:5001/session', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({end_datetime: new Date(), duration_in_minutes: Math.ceil(studySessionDuration / 60)})
+          });
+        }
+        isCurrentlyStudying = !isCurrentlyStudying
+        if (isCurrentlyStudying) {
+          initialiseTimer(studySessionDuration)
+          mode.textContent = "Study time"
+        }
+        else {
+          initialiseTimer(breakDuration)
+          mode.textContent = "Break time"
+        }
         return
       }
       timer.textContent = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
     }
 
     startButton.addEventListener("click", function() {
-      const studySessionDuration = parseFloat(studySessionDurationInput.value) * 60
-      const breakDuration = parseFloat(breakDurationInput.value) * 60
-      const totalStudyDuration = parseFloat(totalStudyDurationInput.value) * 60 * 60
+      studySessionDuration = parseFloat(studySessionDurationInput.value) * 60
+      breakDuration = parseFloat(breakDurationInput.value) * 60
+      totalStudyDuration = parseFloat(totalStudyDurationInput.value) * 60 * 60
 
       currentStudySessionDuration = Math.ceil(studySessionDuration / 60)
 
       if (timer.textContent === "00:00:00" || !isPaused) {
         initialiseTimer(studySessionDuration)
+        mode.textContent = "Study time"
       }
       currentTimer = setInterval(subtractSecondFromTimer, 1000)
     })

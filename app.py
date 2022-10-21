@@ -42,14 +42,14 @@ def home():
 @app.get('/signin')
 def view_signin():
     if not current_user.is_anonymous:
-        return redirect(url_for(view_profile.__name__))
+        return redirect(url_for(view_timer.__name__))
     return render_template('signin.html')
 
 
 @app.post('/signin')
 def accept_signin():
     if not current_user.is_anonymous:
-        return redirect(url_for(view_profile.__name__))
+        return redirect(url_for(view_timer.__name__))
     username, password = grab_form_values('username', 'password')
     user = authenticate_user(username, password)
     if user is None:
@@ -64,14 +64,14 @@ def accept_signin():
 @app.get('/signup')
 def view_signup():
     if not current_user.is_anonymous:
-        return redirect(url_for(view_profile.__name__))
+        return redirect(url_for(view_timer.__name__))
     return render_template('signup.html')
 
 
 @app.post('/signup')
 def accept_signup():
     if not current_user.is_anonymous:
-        return redirect(url_for(view_profile.__name__))
+        return redirect(url_for(view_timer.__name__))
     username, email, password = grab_form_values('username', 'email', 'password')
     if error := grab_account_creation_error(username, email, password):
         flash(error, "error")
