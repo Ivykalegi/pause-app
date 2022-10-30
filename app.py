@@ -1,3 +1,5 @@
+import random
+
 from flask import Flask, request, flash, render_template, redirect, url_for, jsonify
 from flask_login import LoginManager, UserMixin, login_user, logout_user, current_user, login_required
 from datetime import datetime, timedelta
@@ -7,6 +9,9 @@ from utils import grab_form_values, grab_account_creation_error
 from database.user_mgmt import create_new_user, authenticate_user, get_user_by_id
 from database.session_mgmt import insert_user_session
 
+from activities.activity_manager import *
+
+port = 5003
 
 app = Flask(__name__)
 app.secret_key = FLASK_SECRET
@@ -96,7 +101,8 @@ def view_profile():
 
 @app.get("/timer")
 def view_timer():
-    return render_template("timer.html")
+
+    return render_template("timer.html", port=port)
 
 
 @app.post('/session')
@@ -108,5 +114,11 @@ def accept_session():
     return jsonify(request.json)
 
 
+@app.get("/activities")
+def pick_activity():
+    activity_manager = ActivityManager()
+    return activity_manager.get_random_activities()
+
+
 if __name__ == "__main__":
-    app.run(port=5001)
+    app.run(port=port)

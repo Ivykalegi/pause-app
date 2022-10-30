@@ -1,0 +1,35 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--  <meta charset="UTF-8">-->
+<!--  <title>List | Brain Gym Activities</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--  <p>Which activity would you like to know more about?</p>-->
+<!--  {% for activity in get_activities %}-->
+<!--    <a href="/{{ activity['name'] }}">{{ activity['name'] }}</a>-->
+<!--  {% endfor %}-->
+<!--</body>-->
+<!--</html>-->
+
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ activity['name'] }} | Pause App</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css">
+</head>
+<body class="h-100 bg-dark text-light d-flex flex-column justify-content-center align-items-center">
+  <h1 class="text-info text-capitalize">{{ activity['name'] }}</h1>
+  <img src="{{ activity['crosscrawl']['front_default'] }}" width="96" height="96">
+  <p>Duration: <span class="text-info">{{ activity['duration'] }}</span></p>
+  <p>Benefits: <span class="text-info">{{ activity['benefits'] }}</span> &bullet; Weight: <span class="text-info">{{ pokemon['weight'] }}</span></p>
+  <p>Link(s):
+    {% for link in activity['link'] %}
+      <span class="text-info">{{ link['link']}}</span> {{ 'and' if not loop.last else '' }}
+    {% endfor %}
+  </p>
+  <a href="/" role="button" class="btn btn-outline-light">Return to home</a>
+</body>
+</html>
