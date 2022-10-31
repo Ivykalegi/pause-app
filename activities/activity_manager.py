@@ -1,7 +1,6 @@
-
 import random
 from pprint import pprint
-from activities.brain_gym_data import activities
+from activities.brain_gym_data import brain_activities
 from activities.wellbeing_data import wellb_activities
 
 
@@ -17,7 +16,7 @@ class ActivityManager:
         return [random_activities[number].get(x) for x in ['name', 'benefits', 'instructions']]
 
     def get_brain_gym_activity(self):
-        return random.choice(activities    )
+        return random.choice(brain_activities)
 
     def get_wellbeing_activity(self):
         return random.choice(wellb_activities)

@@ -1,4 +1,4 @@
-activities = [
+brain_activities = [
     {'id': 1, 'name': 'Cross crawl', 'type': 'Brain Gym', 'duration': '180 seconds',
      'benefits': 'Cross crawl exercise helps improve the coordination between the '
                  'right and left brain.', 'instructions': 'https://www.youtube.com/watch?v=fYJs9NZJj2g'},

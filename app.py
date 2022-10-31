@@ -1,5 +1,3 @@
-import random
-
 from flask import Flask, request, flash, render_template, redirect, url_for, jsonify
 from flask_login import LoginManager, UserMixin, login_user, logout_user, current_user, login_required
 from datetime import datetime, timedelta
@@ -20,6 +18,7 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = '/signin'
 login_manager.login_message = 'Please sign in to view this page.'
+login_manager.login_message_category = 'error'
 
 
 class User(UserMixin):
@@ -41,20 +40,22 @@ def user_loader(user_id):
 
 @app.get('/')
 def home():
+    if not current_user.is_anonymous:
+        return redirect(url_for(view_dashboard.__name__))
     return render_template('home.html')
 
 
 @app.get('/signin')
 def view_signin():
     if not current_user.is_anonymous:
-        return redirect(url_for(view_timer.__name__))
+        return redirect(url_for(view_dashboard.__name__))
     return render_template('signin.html')
 
 
 @app.post('/signin')
 def accept_signin():
     if not current_user.is_anonymous:
-        return redirect(url_for(view_timer.__name__))
+        return redirect(url_for(view_dashboard.__name__))
     username, password = grab_form_values('username', 'password')
     user = authenticate_user(username, password)
     if user is None:
@@ -62,21 +63,21 @@ def accept_signin():
     else:
         user = User(user)
         login_user(user)
-        return redirect(url_for(view_timer.__name__))
+        return redirect(url_for(view_dashboard.__name__))
     return redirect(url_for(view_signin.__name__))
 
 
 @app.get('/signup')
 def view_signup():
     if not current_user.is_anonymous:
-        return redirect(url_for(view_timer.__name__))
+        return redirect(url_for(view_dashboard.__name__))
     return render_template('signup.html')
 
 
 @app.post('/signup')
 def accept_signup():
     if not current_user.is_anonymous:
-        return redirect(url_for(view_timer.__name__))
+        return redirect(url_for(view_dashboard.__name__))
     username, email, password = grab_form_values('username', 'email', 'password')
     if error := grab_account_creation_error(username, email, password):
         flash(error, "error")
@@ -86,11 +87,17 @@ def accept_signup():
     return redirect(url_for(view_signin.__name__))
 
 
-@app.post('/signout')
+@app.get('/signout')
 @login_required
 def accept_signout():
     logout_user()
-    return redirect(url_for(view_signin.__name__))
+    return redirect(url_for(home.__name__))
+
+
+@app.get('/dashboard')
+@login_required
+def view_dashboard():
+    return render_template('dashboard.html', user=current_user)
 
 
 @app.get('/profile')
@@ -101,7 +108,6 @@ def view_profile():
 
 @app.get("/timer")
 def view_timer():
-
     return render_template("timer.html", port=port)
 
 
