@@ -77,7 +77,7 @@
         seconds = 59
       } else {
         if (isCurrentlyStudying) {
-          fetch('http://127.0.0.1:5001/session', {
+          fetch('http://127.0.0.1:{{ port }}/session', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
