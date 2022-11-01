@@ -1,43 +1,68 @@
-<!DOCTYPE html>
-<html lang="en">
-<head class="h-100">
-  <meta charset="UTF-8">
-  <title>Title</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="/static/styles.css">
-</head>
-<body class="h-100">
-  <main class="h-100 d-flex flex-column justify-content-center align-items-center">
-    <div class="container">
-      <h1 class="display-4 text-center my-5">Study Timer</h1>
-      <div class="card mx-auto" style="max-width: 500px;">
-        <div class="card-body text-center">
-          <p class="lead mb-0" id="mode"></p>
-          <p class="card-text mb-4" style="font-size: 5rem;" id="timer">00:00:00</p>
-          <form>
-            <div class="mb-3">
-              <label for="study-session-duration" class="form-label">Study session duration (minutes)</label>
-              <input type="number" class="form-control" id="study-session-duration">
-            </div>
-            <div class="mb-3">
-              <label for="break-duration" class="form-label">Break duration (minutes)</label>
-              <input type="number" class="form-control" id="break-duration">
-            </div>
-            <div class="mb-3">
-              <label for="total-study-duration" class="form-label">Total study duration (hours)</label>
-              <input type="number" class="form-control" id="total-study-duration">
-            </div>
-            <button type="button" class="btn btn-success" id="btn-start">Start</button>
-            <button type="button" class="btn btn-secondary" id="btn-pause">Pause</button>
-            <button type="button" class="btn btn-danger" id="btn-reset">Reset</button>
-          </form>
+{% extends 'base.html' %}
+{% block title %}Timer{% endblock %}
+{% block body %}
+  <div class="container-fluid h-100 py-5">
+    <h1 class="text-center mt-5 text-uppercase" style="font-size: 7rem; line-height: 1;">Study Timer</h1>
+    <div class="row">
+      <div class="col-lg d-flex flex-column justify-content-center align-items-center text-center py-4">
+        <div style="position: relative;">
+          <svg viewBox="-9.9 0.0 573.6 500.1" style="fill: rgb(0, 0, 0); width: 20rem;" role="img" aria-label="Hand Drawn lllustrated Patterned Cloud Shaped Blue Sticky Note"><g id="__id69_s7fkpywyx4"><path d="M452.9,500.1C326.2,500,199.7,500,73.2,500c-30.1-0.9-55.5-21.9-61.4-49.9c-5.2-24.5,5.4-50.3,26.9-65.2 c-19.2-20.5-25-50.2-15-76c9.4-24.3,31.4-41.8,57.5-45.6c-9.8-44.1,6.2-88.8,40.3-113.4c38.2-27.5,82-17.2,88.6-15.5 c3.8-8.6,13-26.3,32.5-38.7c27.8-17.7,65.2-17.7,92.9,0c19.5,12.4,28.7,30.1,32.5,38.7c6.6-1.7,50.4-12,88.6,15.5 c34.1,24.5,50.1,69.3,40.3,113.4c3.2,0.6,41.8,8.7,57.5,45.6c11.7,27.5,5.9,60-14.8,83c19.6,13.5,30.1,36.3,26.7,58.3 c-4.3,27.6-30.1,49.6-61.4,49.9c-10.3,0-20.6,0-30.9,0 M452.9,500.1c7,0,14,0,21.1,0" style="fill: rgb(46, 56, 125);"></path></g><g id="__id70_s7fkpywyx4"><path id="cloud" d="M458,484.3c-131.9-0.1-263.6-0.1-395.3-0.1c-30.1-0.9-55.5-21.9-61.4-49.9c-5.2-24.5,5.4-50.3,26.9-65.2 c-19.2-20.5-25-50.2-15-76c9.4-24.3,31.4-41.8,57.5-45.6c-9.8-44.1,6.2-88.8,40.3-113.4c38.2-27.5,82-17.2,88.6-15.5 c3.8-8.6,13-26.3,32.5-38.7c27.8-17.7,65.2-17.7,92.9,0c19.5,12.4,28.7,30.1,32.5,38.7c6.6-1.7,50.4-12,88.6,15.5 c34.1,24.5,50.1,69.3,40.3,113.4c3.2,0.6,41.8,8.7,57.5,45.6c11.7,27.5,5.9,60-14.8,83c19.6,13.5,30.1,36.3,26.7,58.3 c-4.3,27.6-30.1,49.6-61.4,49.9 M494.4,484.3c-12.1,0-24.3,0-36.4,0" style="fill: rgb(182, 225, 227);"></path></g><g id="__id72_s7fkpywyx4"><path d="M318.8,41.1c-1.2,9.2-2.3,18.4-3.5,27.7 M315.3,68.7c-2.1,16.6-4.2,33.2-6.3,49.8c-19.6-2-39.1-4.1-58.7-6.1 c3.7-33.8,7.4-67.6,11-101.4c12.2,3.1,24.3,6.2,36.5,9.3C306.5,13.6,315.3,6.8,324,0c-1.7,13.7-3.5,27.4-5.2,41.1" style="fill: rgb(255, 222, 89);"></path></g></svg>
+          <p class="text-lowercase text-dark" id="mode" style="font-size: 2rem; position: absolute; top: 40%; left: 0; right: 0;">Study time</p>
+          <p class="card-text text-dark mb-4" style="font-size: 4rem; position: absolute; bottom: 5%; left: 0; right: 0;" id="timer">00:00:00</p>
+        </div>
+        <form class="bg-info mt-4 p-4 rounded-5">
+          <h4>Choose your study time</h4>
+          <div class="mb-3">
+            <label for="study-session-duration" class="form-label">Study session duration (minutes)</label>
+            <input type="number" class="form-control" id="study-session-duration">
+          </div>
+          <div class="mb-3">
+            <label for="break-duration" class="form-label">Break duration (minutes)</label>
+            <input type="number" class="form-control" id="break-duration">
+          </div>
+          <div>
+            <label for="total-study-duration" class="form-label">Total study duration (hours)</label>
+            <input type="number" class="form-control" id="total-study-duration">
+          </div>
+        </form>
+      </div>
+      <div class="col-lg d-flex flex-column justify-content-center align-items-center align-items-lg-start py-4">
+        <div class="w-75 d-flex justify-content-between">
+          <div style="position: relative;">
+            <svg viewBox="-10.7 0.0 1600.2 499.9" style="fill: rgb(0, 0, 0); width: 100%; max-width: 8rem;" role="img" aria-label="Hand Drawn lllustrated Patterned Rectangle Red Sticky Note"><g id="__id162_sg94dxfe5r"><path d="M1209.5,31h177.3c10.9,0,21.4,4.5,28.9,12.4l44.7,47l49.8,52.3l38.9,40.7c14.1,14.8,22.8,32.8,26.1,51.7 c3.9,22.3,0.4,45.4-10.8,65.6v0.1c-3.3,6.5-7.6,12.4-12.6,18.1l-52.7,60.3l-46.7,53.3l-47.1,53.8c-7.5,8.6-18.4,13.6-29.9,13.6H41.7 c-32,0-50.9-35.8-32.9-62.2c1.6-2.4,3.2-4.7,4.9-7.1c12.5-18.3,25-36.8,37.5-55.1c17.7-25.8,35.3-51.8,52.9-77.6 c1.1-1.8,2.4-3.4,3.5-5.2c9.1-13.3,9.3-30.7,0.5-44.2c-2.8-4.3-5.5-8.4-8.3-12.7c-17.3-26.7-34.7-53.3-52.1-79.9 C36,137.9,24.3,120,12.6,102c-2.1-3.1-4.1-6.3-6.1-9.4C-10.7,66.1,8.3,31,39.9,31H1168 M1168,31h41.5" style="fill: rgb(255, 160, 119);"></path></g><g id="__id163_sg94dxfe5r"><path d="M950,0h447.2c10.9,0,21.4,4.5,28.9,12.4l44.7,47l49.8,52.3l38.9,40.7c14.1,14.8,22.8,32.8,26.1,51.7 c3.9,22,0.4,45.2-10.8,65.4v0.1c-3.3,6.5-7.6,12.4-12.6,18.1l-52.7,60.3l-46.7,53.3l-47.1,53.8c-7.5,8.6-18.4,13.6-29.9,13.6H52.1 c-32,0-50.9-35.8-32.9-62.2c1.6-2.4,3.2-4.7,4.9-7.1c12.5-18.3,25-36.8,37.5-55.1c17.7-25.8,35.3-51.8,52.9-77.6 c1.1-1.8,2.4-3.4,3.5-5.2c9.1-13.3,9.3-30.7,0.5-44.2c-2.8-4.3-5.5-8.4-8.3-12.7c-17.3-26.7-34.7-53.3-52.1-79.9 c-11.7-18-23.4-35.9-35.1-53.9c-2.1-3.1-4.1-6.3-6.1-9.4C-0.3,35.1,18.7,0,50.3,0H909 M909,0h41" style="fill: rgb(255, 222, 89);"></path></g></svg>
+            <p class="w-100 h-100 text-dark fs-5 d-flex justify-content-center align-items-center" style="position: absolute; top: 0; left: 0;">Start</p>
+            <button type="button" class="btn btn-transparent w-100 h-100" style="position: absolute; top: 0; left: 0;" id="btn-start" aria-label="Start"></button>
+          </div>
+          <div style="position: relative;">
+            <svg viewBox="-10.7 0.0 1600.2 499.9" style="fill: rgb(0, 0, 0); width: 100%; max-width: 8rem;" role="img" aria-label="Hand Drawn lllustrated Patterned Rectangle Red Sticky Note"><g id="__id174_snf1nl79h"><path d="M1209.5,31h177.3c10.9,0,21.4,4.5,28.9,12.4l44.7,47l49.8,52.3l38.9,40.7c14.1,14.8,22.8,32.8,26.1,51.7 c3.9,22.3,0.4,45.4-10.8,65.6v0.1c-3.3,6.5-7.6,12.4-12.6,18.1l-52.7,60.3l-46.7,53.3l-47.1,53.8c-7.5,8.6-18.4,13.6-29.9,13.6H41.7 c-32,0-50.9-35.8-32.9-62.2c1.6-2.4,3.2-4.7,4.9-7.1c12.5-18.3,25-36.8,37.5-55.1c17.7-25.8,35.3-51.8,52.9-77.6 c1.1-1.8,2.4-3.4,3.5-5.2c9.1-13.3,9.3-30.7,0.5-44.2c-2.8-4.3-5.5-8.4-8.3-12.7c-17.3-26.7-34.7-53.3-52.1-79.9 C36,137.9,24.3,120,12.6,102c-2.1-3.1-4.1-6.3-6.1-9.4C-10.7,66.1,8.3,31,39.9,31H1168 M1168,31h41.5" style="fill: rgb(255, 222, 89);"></path></g><g id="__id175_snf1nl79h"><path d="M950,0h447.2c10.9,0,21.4,4.5,28.9,12.4l44.7,47l49.8,52.3l38.9,40.7c14.1,14.8,22.8,32.8,26.1,51.7 c3.9,22,0.4,45.2-10.8,65.4v0.1c-3.3,6.5-7.6,12.4-12.6,18.1l-52.7,60.3l-46.7,53.3l-47.1,53.8c-7.5,8.6-18.4,13.6-29.9,13.6H52.1 c-32,0-50.9-35.8-32.9-62.2c1.6-2.4,3.2-4.7,4.9-7.1c12.5-18.3,25-36.8,37.5-55.1c17.7-25.8,35.3-51.8,52.9-77.6 c1.1-1.8,2.4-3.4,3.5-5.2c9.1-13.3,9.3-30.7,0.5-44.2c-2.8-4.3-5.5-8.4-8.3-12.7c-17.3-26.7-34.7-53.3-52.1-79.9 c-11.7-18-23.4-35.9-35.1-53.9c-2.1-3.1-4.1-6.3-6.1-9.4C-0.3,35.1,18.7,0,50.3,0H909 M909,0h41" style="fill: rgb(182, 225, 227);"></path></g></svg>
+            <p class="w-100 h-100 text-dark fs-5 d-flex justify-content-center align-items-center" style="position: absolute; top: 0; left: 0;">Pause</p>
+            <button type="button" class="btn btn-transparent w-100 h-100" style="position: absolute; top: 0; left: 0;" id="btn-pause" aria-label="Pause"></button>
+          </div>
+          <div style="position: relative;">
+            <svg viewBox="-10.7 0.0 1600.2 499.9" style="fill: rgb(0, 0, 0); width: 100%; max-width: 8rem;" role="img" aria-label="Hand Drawn lllustrated Patterned Rectangle Red Sticky Note"><g id="__id159_serowom3aj"><path d="M1209.5,31h177.3c10.9,0,21.4,4.5,28.9,12.4l44.7,47l49.8,52.3l38.9,40.7c14.1,14.8,22.8,32.8,26.1,51.7 c3.9,22.3,0.4,45.4-10.8,65.6v0.1c-3.3,6.5-7.6,12.4-12.6,18.1l-52.7,60.3l-46.7,53.3l-47.1,53.8c-7.5,8.6-18.4,13.6-29.9,13.6H41.7 c-32,0-50.9-35.8-32.9-62.2c1.6-2.4,3.2-4.7,4.9-7.1c12.5-18.3,25-36.8,37.5-55.1c17.7-25.8,35.3-51.8,52.9-77.6 c1.1-1.8,2.4-3.4,3.5-5.2c9.1-13.3,9.3-30.7,0.5-44.2c-2.8-4.3-5.5-8.4-8.3-12.7c-17.3-26.7-34.7-53.3-52.1-79.9 C36,137.9,24.3,120,12.6,102c-2.1-3.1-4.1-6.3-6.1-9.4C-10.7,66.1,8.3,31,39.9,31H1168 M1168,31h41.5" style="fill: rgb(255, 222, 89);"></path></g><g id="__id160_serowom3aj"><path d="M950,0h447.2c10.9,0,21.4,4.5,28.9,12.4l44.7,47l49.8,52.3l38.9,40.7c14.1,14.8,22.8,32.8,26.1,51.7 c3.9,22,0.4,45.2-10.8,65.4v0.1c-3.3,6.5-7.6,12.4-12.6,18.1l-52.7,60.3l-46.7,53.3l-47.1,53.8c-7.5,8.6-18.4,13.6-29.9,13.6H52.1 c-32,0-50.9-35.8-32.9-62.2c1.6-2.4,3.2-4.7,4.9-7.1c12.5-18.3,25-36.8,37.5-55.1c17.7-25.8,35.3-51.8,52.9-77.6 c1.1-1.8,2.4-3.4,3.5-5.2c9.1-13.3,9.3-30.7,0.5-44.2c-2.8-4.3-5.5-8.4-8.3-12.7c-17.3-26.7-34.7-53.3-52.1-79.9 c-11.7-18-23.4-35.9-35.1-53.9c-2.1-3.1-4.1-6.3-6.1-9.4C-0.3,35.1,18.7,0,50.3,0H909 M909,0h41" style="fill: rgb(202, 184, 209);"></path></g></svg>
+            <p class="w-100 h-100 text-dark fs-5 d-flex justify-content-center align-items-center" style="position: absolute; top: 0; left: 0;">Reset</p>
+            <button type="button" class="btn btn-transparent w-100 h-100" style="position: absolute; top: 0; left: 0;" id="btn-reset" aria-label="Reset"></button>
+          </div>
+        </div>
+        <div class="w-75 mt-5 p-4 bg-white text-dark text-center rounded-5" style="min-height: 400px;">
+          <h3 class="mb-4">Activity suggestion</h3>
+          <div id="activity">
+            <p class="lead">Finish studying first!</p>
+          </div>
         </div>
       </div>
     </div>
-  </main>
-  <script>
+  </div>
+  <a href="/dashboard" class="d-block fixed-top text-end m-3 p-2 ms-auto rounded bg-dark shadow text-decoration-none" style="width: 75px;">
+    <div class="text-center" style="line-height: 1.15;">
+      <i class="bi bi-box-arrow-right fs-1 ms-2"></i>
+      <p class="mb-0">Back to home</p>
+    </div>
+  </a>
+  <script type="module">
     const timer = document.getElementById("timer")
     const mode = document.getElementById("mode")
+    const activity = document.getElementById("activity")
 
     const startButton = document.getElementById("btn-start")
     const pauseButton = document.getElementById("btn-pause")
@@ -47,6 +72,8 @@
     const breakDurationInput = document.getElementById("break-duration")
     const totalStudyDurationInput = document.getElementById("total-study-duration")
 
+    const cloud = document.getElementById("cloud")
+
     let currentTimer = null
     let isPaused = false
     let isCurrentlyStudying = true
@@ -54,6 +81,11 @@
     let studySessionDuration = 0
     let breakDuration = 0
     let totalStudyDuration = 0
+
+    const activitiesResponse = await fetch("http://127.0.0.1:5003/activities")
+    const activities = await activitiesResponse.json()
+
+    let currentActivityIndex = 0
 
     function initialiseTimer(seconds) {
       const hours = Math.floor(seconds / (60 * 60))
@@ -89,10 +121,25 @@
         if (isCurrentlyStudying) {
           initialiseTimer(studySessionDuration)
           mode.textContent = "Study time"
+          cloud.style.fill = "var(--bs-primary)"
+          activity.innerHTML = "<p class='lead'>Finish studying first!</p>"
         }
         else {
           initialiseTimer(breakDuration)
           mode.textContent = "Break time"
+          cloud.style.fill = "var(--bs-danger)"
+          const currentActivity = activities[currentActivityIndex]
+          activity.innerHTML = `
+            <p class="lead mb-0" style="font-size: 2rem;">${currentActivity.name}</p>
+            <p class="lead">${currentActivity.duration}</p>
+            <p>${currentActivity.benefits}</p>
+            <p>
+              ${currentActivity.instructions.startsWith('http')
+                ? `<a href="${currentActivity.instructions}" target="_blank" class="link-dark">Instructions here!</a>`
+                : `<p>${currentActivity.instructions}</p>`}
+            </p>
+          `
+          currentActivityIndex++
         }
         return
       }
@@ -104,12 +151,14 @@
       breakDuration = parseFloat(breakDurationInput.value) * 60
       totalStudyDuration = parseFloat(totalStudyDurationInput.value) * 60 * 60
 
-      currentStudySessionDuration = Math.ceil(studySessionDuration / 60)
-
+      if (isNaN(studySessionDuration) || isNaN(breakDuration) || isNaN(totalStudyDuration)) {
+        return
+      }
       if (timer.textContent === "00:00:00" || !isPaused) {
         initialiseTimer(studySessionDuration)
         mode.textContent = "Study time"
       }
+      clearInterval(currentTimer)
       currentTimer = setInterval(subtractSecondFromTimer, 1000)
     })
 
@@ -122,7 +171,9 @@
       clearInterval(currentTimer)
       isPaused = false
       timer.textContent = "00:00:00"
+      mode.textContent = "Study time"
+      cloud.style.fill = "var(--bs-primary)"
+      activity.innerHTML = "<p class='lead'>Finish studying first!</p>"
     })
   </script>
-</body>
-</html>
+{% endblock %}
