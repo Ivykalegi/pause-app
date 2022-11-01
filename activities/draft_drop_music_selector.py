@@ -4,7 +4,7 @@ import itertools
 import time
 import os
 from pygame import mixer
-from brain_gym_data import activities
+from activities_data import all_activities
 
 
 root = tk.Tk()
@@ -23,7 +23,6 @@ class Player:
         siis_chamoshla.configure(width=30, bg="white")
         siis_chamoshla.pack()
 
-        # play panel, initially hidden
         self.panel = tk.Frame(master)
         self.image_label = tk.Label(self.panel)
         self.image_label.pack()
@@ -32,12 +31,13 @@ class Player:
 
    
 
-# Creating Playlist Frame
-    def playlist_sounds(self, songtracks):
-            os.chdir("/Users/joannawaller/Desktop/Pause Study Sounds")
+
+    def playlist_sounds(self, playlist, songtracks):
+            os.listdir("/Users/joannawaller/Desktop/Pause Study Sounds")
             songtracks = os.listdir()
+            self.playlist = playlist
             for track in songtracks:
-                self.playlist.insert(END,track)
+                self.playlist.insert(END,songtracks)
 
 
     def play_song(self):
