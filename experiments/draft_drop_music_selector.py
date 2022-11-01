@@ -4,7 +4,7 @@ import itertools
 import time
 import os
 from pygame import mixer
-from activities_data import all_activities
+from experiments.activities_data import all_activities
 
 
 root = tk.Tk()

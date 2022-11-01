@@ -1,5 +1,5 @@
 from flask import Flask, jsonify
-from activities_data import all_activities
+from experiments.activities_data import all_activities
 
 app = Flask(__name__)
 
