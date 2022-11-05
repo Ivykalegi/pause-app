@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}Timer{% endblock %}
+{% block body %}
+  <div class="container text-center h-100 py-5" style="max-width: 60rem;">
+    <h1 class="mt-5 text-uppercase mb-4" style="font-size: 5rem; line-height: 1;">My study progress</h1>
+    {{ graph|safe }}
+  </div>
+  <a href="/dashboard" class="d-block fixed-top text-end m-3 p-2 ms-auto rounded bg-dark shadow text-decoration-none" style="width: 75px;">
+    <div class="text-center" style="line-height: 1.15;">
+      <i class="bi bi-box-arrow-right fs-1 ms-2"></i>
+      <p class="mb-0">Back to home</p>
+    </div>
+  </a>
+  <script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.min.js"></script>
+  <script src="https://unpkg.com/tippy.js@6/dist/tippy-bundle.umd.js"></script>
+  <script>
+    const graphSquares = document.querySelectorAll('[data-count]')
+    graphSquares.forEach(function(square) {
+      tippy(square, {
+        content: `${square.getAttribute('data-count')} minutes on ${square.getAttribute('data-date')}`,
+      })
+    })
+    const graphLinks = document.querySelectorAll('svg a')
+    graphLinks.forEach(function(link) {
+      link.removeAttribute('href')
+      link.removeAttribute('target')
+    })
+  </script>
+{% endblock %}
