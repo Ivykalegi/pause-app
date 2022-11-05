@@ -4,12 +4,15 @@ from datetime import datetime, timedelta
 
 from config import FLASK_SECRET
 from utils import grab_form_values, grab_account_creation_error
+
 from database.user_mgmt import create_new_user, authenticate_user, get_user_by_id
 from database.session_mgmt import insert_user_session
 
-from activities.activity_manager import *
+from api.pixela import create_graph, get_graph, add_session_to_graph
 
-port = 5003
+from activities.activity_manager import ActivityManager
+
+port = 5004
 
 app = Flask(__name__)
 app.secret_key = FLASK_SECRET
@@ -19,6 +22,8 @@ login_manager.init_app(app)
 login_manager.login_view = '/signin'
 login_manager.login_message = 'Please sign in to view this page.'
 login_manager.login_message_category = 'error'
+
+activity_manager = ActivityManager()
 
 
 class User(UserMixin):
@@ -82,7 +87,8 @@ def accept_signup():
     if error := grab_account_creation_error(username, email, password):
         flash(error, "error")
         return redirect(url_for(view_signup.__name__))
-    create_new_user(username, email, password)
+    new_user_id = create_new_user(username, email, password)
+    create_graph(new_user_id)
     flash("New account created.", "info")
     return redirect(url_for(view_signin.__name__))
 
@@ -98,6 +104,13 @@ def accept_signout():
 @login_required
 def view_dashboard():
     return render_template('dashboard.html', user=current_user)
+
+
+@app.get('/progress')
+@login_required
+def view_progress():
+    graph = get_graph(current_user.id)
+    return render_template('progress.html', user=current_user, graph=graph)
 
 
 @app.get('/profile')
@@ -117,12 +130,12 @@ def accept_session():
     duration_in_minutes = request.json.get("duration_in_minutes")
     start_datetime = datetime.strptime(end_datetime, '%Y-%m-%dT%H:%M:%S.%fZ') - timedelta(minutes=duration_in_minutes)
     insert_user_session(current_user.id, start_datetime, duration_in_minutes)
+    add_session_to_graph(current_user.id, datetime.today(), duration_in_minutes)
     return jsonify(request.json)
 
 
 @app.get("/activities")
 def pick_activity():
-    activity_manager = ActivityManager()
     return activity_manager.get_random_activities()
 
 

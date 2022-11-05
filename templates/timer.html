@@ -82,7 +82,7 @@
     let breakDuration = 0
     let totalStudyDuration = 0
 
-    const activitiesResponse = await fetch("http://127.0.0.1:5003/activities")
+    const activitiesResponse = await fetch("http://127.0.0.1:{{ port }}/activities")
     const activities = await activitiesResponse.json()
 
     let currentActivityIndex = 0

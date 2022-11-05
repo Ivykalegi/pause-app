@@ -22,9 +22,10 @@ def create_new_user(username, email, password):
                                      (username, email, hashed_password)
                               VALUES (%s, %s, %s)""", [username, email, hashed_password])
             connection.commit()
+            return cursor.lastrowid
 
 
-def authenticate_user(username, password):   #username or email
+def authenticate_user(username, password):
     with get_db_connection() as connection:
         with connection.cursor(dictionary=True) as cursor:
             password_bytes = password.encode()
