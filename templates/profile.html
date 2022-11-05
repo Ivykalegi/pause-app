@@ -2,9 +2,17 @@
 {% block title %}Home{% endblock %}
 {% block body %}
   <div class="container h-100 d-flex flex-column justify-content-center align-items-center">
-    <h1 class="text-center">Welcome, {{ user.username }}!</h1>
-    <form action="/signout" method="post">
-      <button type="submit" class="btn btn-dark">Sign out</button>
-    </form>
+    <h1 class="display-5 fw-bold text-center">Welcome, {{ user.username }}!</h1>
+    <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+      <form action="/timer" method="post">
+        <button type="submit" class="btn btn-dark btn-lg px-4 gap-3">Start Session</button>
+      </form>
+      <form action="/progress-tracker" method="post">
+        <button type="submit" class="btn btn-dark btn-lg px-4">View Progress</button>
+      </form>
+      <form action="/signout" method="post">
+        <button type="submit" class="btn btn-dark">Log out</button>
+      </form>
+    </div>
   </div>
 {% endblock %}

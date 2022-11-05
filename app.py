@@ -85,11 +85,11 @@ def accept_signup():
         return redirect(url_for(view_dashboard.__name__))
     username, email, password = grab_form_values('username', 'email', 'password')
     if error := grab_account_creation_error(username, email, password):
-        flash(error, "error")
+        flash(error, 'error')
         return redirect(url_for(view_signup.__name__))
     new_user_id = create_new_user(username, email, password)
     create_graph(new_user_id)
-    flash("New account created.", "info")
+    flash('New account created.', 'info')
     return redirect(url_for(view_signin.__name__))
 
 
@@ -126,8 +126,8 @@ def view_timer():
 
 @app.post('/session')
 def accept_session():
-    end_datetime = request.json.get("end_datetime")
-    duration_in_minutes = request.json.get("duration_in_minutes")
+    end_datetime = request.json.get('end_datetime')
+    duration_in_minutes = request.json.get('duration_in_minutes')
     start_datetime = datetime.strptime(end_datetime, '%Y-%m-%dT%H:%M:%S.%fZ') - timedelta(minutes=duration_in_minutes)
     insert_user_session(current_user.id, start_datetime, duration_in_minutes)
     add_session_to_graph(current_user.id, datetime.today(), duration_in_minutes)
