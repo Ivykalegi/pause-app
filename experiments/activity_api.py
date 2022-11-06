@@ -1,3 +1,5 @@
+'''coode to run the activities data as an external api so data is stored externally'''
+
 from flask import Flask, jsonify
 from experiments.activities_data import all_activities
 

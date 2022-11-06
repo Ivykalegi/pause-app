@@ -1,3 +1,5 @@
+'''code to play the mp3 tracks for the study sounds in Python using pygame'''
+
 import itertools
 import time
 from pygame import mixer
