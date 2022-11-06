@@ -123,6 +123,9 @@ def view_profile():
 def view_timer():
     return render_template("timer.html", port=port)
 
+@app.get("/how_pause_works")
+def view_how_pause_works():
+    return render_template("how_pause_works.html")
 
 @app.post('/session')
 def accept_session():
