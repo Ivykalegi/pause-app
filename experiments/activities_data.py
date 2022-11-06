@@ -1,3 +1,5 @@
+'''combined the brain gym data and wellbeing data into one dictionary so not 2 files to access but same storage of data so not used'''
+
 all_activities = [
     {'id': 1, 'name': 'Cross crawl', 'type': 'Brain Gym', 'duration': '180 seconds',
     'benefits': 'Cross crawl exercise helps improve the coordination between the '

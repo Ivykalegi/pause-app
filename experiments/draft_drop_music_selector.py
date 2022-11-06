@@ -1,3 +1,5 @@
+'''tried to code a pop up box for the music track selector that then plays the mp3 track using pygame'''
+
 import tkinter as tk
 from tkinter import *
 import itertools

@@ -8,10 +8,10 @@ class ActivityManager:
     def __init__(self):
         self.brain_gym_activities = brain_gym_activities
         self.wellbeing_activities = wellbeing_activities
-
+    
     def get_random_activities(self):
-        random_wellbeing_activities = [self.get_wellbeing_activity() for number in range(5)]
-        random_brain_gym_activities = [self.get_brain_gym_activity() for number in range(5)]
+        random_wellbeing_activities = [self.get_wellbeing_activity() for number in range(20)]
+        random_brain_gym_activities = [self.get_brain_gym_activity() for number in range(20)]
         random_activities = random_wellbeing_activities + random_brain_gym_activities
         random.shuffle(random_activities)
         return random_activities
