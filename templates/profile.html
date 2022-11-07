@@ -1,18 +1,20 @@
 {% extends 'base.html' %}
-{% block title %}Home{% endblock %}
+{% block title %}My account{% endblock %}
 {% block body %}
-  <div class="container h-100 d-flex flex-column justify-content-center align-items-center">
-    <h1 class="display-5 fw-bold text-center">Welcome, {{ user.username }}!</h1>
-    <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-      <form action="/timer" method="post">
-        <button type="submit" class="btn btn-dark btn-lg px-4 gap-3">Start Session</button>
-      </form>
-      <form action="/progress-tracker" method="post">
-        <button type="submit" class="btn btn-dark btn-lg px-4">View Progress</button>
-      </form>
-      <form action="/signout" method="post">
-        <button type="submit" class="btn btn-dark">Log out</button>
-      </form>
+  <div class="container text-center h-100 py-5" style="max-width: 60rem;">
+    <h1 class="my-5 text-uppercase" style="font-size: 5rem; line-height: 1;">My account</h1>
+    <div class="bg-info text-dark rounded-5 text-start d-flex p-5 w-75 mx-auto" style="height: 500px; position: relative;">
+      <div class="d-flex flex-column ms-auto">
+        <p class="fs-1">Username: <strong>{{ user.username }}</strong></p>
+        <p class="fs-1">Email: <strong>{{ user.email }}</strong></p>
+      </div>
+      <svg viewBox="1.6 1.6 44.9 44.9" class="w-50" style="fill: rgb(255, 222, 89); position: absolute; bottom: -10%; left: -10%; max-width: 300px;" role="img" aria-label="Clock Outline Icon"><g data-name="Layer 25" id="__id4901_sue3aau3yi"><path d="M24,1.55957A22.44043,22.44043,0,1,0,46.44043,24,22.46532,22.46532,0,0,0,24,1.55957ZM41.25781,24.70508h3.14691a20.32657,20.32657,0,0,1-5.14434,12.84649l-2.35022-2.34942a.99989.99989,0,0,0-1.41407,1.41406l2.36426,2.36347A20.33368,20.33368,0,0,1,25,44.38977v-3.4259a1,1,0,0,0-2,0v3.4259a20.33257,20.33257,0,0,1-12.86023-5.41022l2.36414-2.36334a.99989.99989,0,0,0-1.41407-1.41406L8.73975,37.55139a20.32664,20.32664,0,0,1-5.144-12.84631H6.7417a1,1,0,0,0,0-2h-3.116a20.33518,20.33518,0,0,1,5.3949-12.56537L11.08984,12.209a.99989.99989,0,1,0,1.41407-1.41406L10.44867,8.73969A20.32509,20.32509,0,0,1,23,3.61023v2.837a1,1,0,0,0,2,0v-2.837A20.32626,20.32626,0,0,1,37.55145,8.73956l-2.05536,2.05536A.99989.99989,0,1,0,36.91016,12.209l2.06939-2.06939a20.33481,20.33481,0,0,1,5.39527,12.56549h-3.117a1,1,0,0,0,0,2Z" style="fill: inherit;"></path><path d="M24.4209,23.166l-3.106-11.79a.99983.99983,0,1,0-1.93359.50976L22.562,23.96a1.0019,1.0019,0,0,0,.291.48242l6.36181,5.832a1.00015,1.00015,0,0,0,1.35157-1.47461Z" style="fill: inherit;"></path></g></svg>
     </div>
   </div>
+  <a href="/dashboard" class="d-block fixed-top text-end m-3 p-2 ms-auto rounded bg-dark shadow text-decoration-none" style="width: 75px;">
+    <div class="text-center" style="line-height: 1.15;">
+      <i class="bi bi-box-arrow-right fs-1 ms-2"></i>
+      <p class="mb-0">Back to home</p>
+    </div>
+  </a>
 {% endblock %}

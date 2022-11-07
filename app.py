@@ -1,4 +1,4 @@
-from flask import Flask, request, flash, render_template, redirect, url_for, jsonify
+from flask import Flask, request, flash, render_template, redirect, url_for, jsonify, abort
 from flask_login import LoginManager, UserMixin, login_user, logout_user, current_user, login_required
 from datetime import datetime, timedelta
 
@@ -106,6 +106,21 @@ def view_dashboard():
     return render_template('dashboard.html', user=current_user)
 
 
+@app.get('/sounds')
+@login_required
+def view_study_sounds():
+    return render_template('study_sounds.html', user=current_user)
+
+
+@app.get('/music/<track>')
+@login_required
+def hear_music(track):
+    if track not in ['lofi', 'ocean', 'static']:
+        abort(404)
+    track_url = f'/static/{track}_sounds.mp3'
+    return render_template('music.html', user=current_user, track_url=track_url)
+
+
 @app.get('/progress')
 @login_required
 def view_progress():
@@ -123,9 +138,11 @@ def view_profile():
 def view_timer():
     return render_template("timer.html", port=port)
 
+
 @app.get("/how_pause_works")
 def view_how_pause_works():
     return render_template("how_pause_works.html")
+
 
 @app.post('/session')
 def accept_session():
