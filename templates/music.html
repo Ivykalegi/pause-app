@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}Music{% endblock %}
+{% block body %}
+  <div class="container text-center h-100 py-5" style="max-width: 60rem;">
+    <h1 class="my-5 text-uppercase" style="font-size: 5rem; line-height: 1;">Study sounds</h1>
+    <h3 class="text-info mb-5">Keep this tab open in the background while you return to Pause and start your study session!</h3>
+    <audio src="{{ track_url }}" loop autoplay controls></audio>
+  </div>
+  <a href="/dashboard" class="d-block fixed-top text-end m-3 p-2 ms-auto rounded bg-dark shadow text-decoration-none" style="width: 75px;">
+    <div class="text-center" style="line-height: 1.15;">
+      <i class="bi bi-box-arrow-right fs-1 ms-2"></i>
+      <p class="mb-0">Back to home</p>
+    </div>
+  </a>
+{% endblock %}
