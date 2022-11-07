@@ -4,6 +4,14 @@ from config import PIXELA_USERNAME, PIXELA_TOKEN
 
 
 def create_graph(user_id):
+    """
+    creates new pixelation graph definition for users
+
+    *(API used: Pixela)*
+
+    :param user_id: the id of the user to create graph
+    :type user_id: int
+    """
     requests.post(f'https://pixe.la/v1/users/{PIXELA_USERNAME}/graphs', headers={
         'X-USER-TOKEN': PIXELA_TOKEN,
     }, json={
@@ -16,6 +24,15 @@ def create_graph(user_id):
 
 
 def get_graph(user_id):
+    """
+    gets pixelation graph definition for users
+    tries to get the graph with the user_id , excepts RequestException and returns 'no graph to show'
+
+    *(API used: Pixela)*
+
+    :param user_id: the id of the user to get graph
+    :type user_id: int
+    """
     try:
         response = requests.get(f'https://pixe.la/v1/users/{PIXELA_USERNAME}/graphs/p{user_id}', headers={
             'X-USER-TOKEN': PIXELA_TOKEN,
@@ -30,11 +47,26 @@ def get_graph(user_id):
 
 
 def add_session_to_graph(user_id, session_date, session_duration):
+    """
+    adds pixelation graph definition for longer/continued session
+    tries until status code is not 503, then adds new session to the existing session
+
+    *(API used: Pixela)*
+
+    :param user_id: the id of the user to get graph
+    :type user_id: int
+    :param session_date: the date of the user began/continued the study session
+    :type session_date: datetime
+    :param session_duration: the time in minutes the study session lasted/continued
+    :type session_duration: int
+    """
     try:
         while True:
-            response = requests.get(f'https://pixe.la/v1/users/{PIXELA_USERNAME}/graphs/p{user_id}/{session_date.strftime("%Y%m%d")}', headers={
-                'X-USER-TOKEN': PIXELA_TOKEN,
-            })
+            response = requests.get(
+                f'https://pixe.la/v1/users/{PIXELA_USERNAME}/graphs/p{user_id}/{session_date.strftime("%Y%m%d")}',
+                headers={
+                    'X-USER-TOKEN': PIXELA_TOKEN,
+                })
             if response.status_code != 503:
                 response.raise_for_status()
                 break
@@ -52,10 +84,12 @@ def add_session_to_graph(user_id, session_date, session_duration):
         existing_data = response.json()
         existing_quantity = int(existing_data.get('quantity'))
         while True:
-            response = requests.put(f'https://pixe.la/v1/users/{PIXELA_USERNAME}/graphs/p{user_id}/{session_date.strftime("%Y%m%d")}', headers={
-                'X-USER-TOKEN': PIXELA_TOKEN,
-            }, json={
-                'quantity': str(existing_quantity + session_duration),
-            })
+            response = requests.put(
+                f'https://pixe.la/v1/users/{PIXELA_USERNAME}/graphs/p{user_id}/{session_date.strftime("%Y%m%d")}',
+                headers={
+                    'X-USER-TOKEN': PIXELA_TOKEN,
+                }, json={
+                    'quantity': str(existing_quantity + session_duration),
+                })
             if response.status_code != 503:
                 break

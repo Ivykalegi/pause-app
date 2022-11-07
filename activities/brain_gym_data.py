@@ -37,5 +37,6 @@ brain_gym_activities = [
      'instructions': 'https://www.youtube.com/watch?v=enXPdTB3kYI'},
     {'id': 10, 'name': 'Brain Buttons', 'type': 'Brain Gym', 'duration': '3 minutes',
      'benefits': 'Brain buttons or switching on helps improve the flow of electromagnetic energy. It relaxes the eyes, '
-                 'shoulder, and neck and promotes body balance.', 'instructions': 'https://www.youtube.com/watch?v=XJ0NhV-u2b0'}
+                 'shoulder, and neck and promotes body balance.',
+     'instructions': 'https://www.youtube.com/watch?v=XJ0NhV-u2b0'}
 ]
