@@ -50,7 +50,7 @@ If you already have a registered account, sign in using your username and passwo
 
 *Home Page*
 
-You will see a welcome dashboard. From here, click on any of the buttons to select a Pause app option. Here, you can navigate to your account, start a study session, choose study sounds, see your study progress tracker, find out how Pause works, or sign out and return to the sign in page by clicking on the home icon in the top right corner.
+You will see a welcome dashboard. From here, click on any of the buttons to select a Pause app option. Here, you can navigate to your account details, start a study session, choose study sounds, see your study progress tracker, find out how Pause works, or sign out and return to the sign in page by clicking on the home icon in the top right corner.
 
 <img width="1272" alt="Screenshot 2022-11-01 at 14 14 56" src="https://user-images.githubusercontent.com/112558282/200183173-d3d1ca0b-6949-4a50-824b-c9cae5c6bd68.png">
 
@@ -74,7 +74,7 @@ Click on this icon to read about how Pause can help with your studies.
 
 *Choose Study Sounds*
 
-(Under development)
+Click on this icon to choose from 3 chilled sounds that play in a separate window while you study.
 
 *Sign Out*
 
